@@ -4,13 +4,28 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
+from flask import Flask, render_template, request
+from flask_socketio import SocketIO,emit
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'secret!'
+    app.config['COMPRESSOR_STATIC_PREFIX'] = 'static'
+    app.static_folder = 'static'
+
+    socketio = SocketIO(app)
+
+
+    @app.route('/')
+    def home():
+        return render_template('home.html')
+
+
+    @app.route('/imsi/')
+    def imsi():
+        return render_template('imsi.html')
+
+    app.run()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
